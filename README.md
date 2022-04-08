@@ -6,5 +6,15 @@
 ## Abstract
 Das Smart Inventory System ermöglicht die schnelle und sichere Inventarisierung unterschiedlichster Objekte. Es ermöglicht die geordnete Ablage, einen guten Überblick und einen schnellen Zugriff. Jegliche Transaktion wird protokolliert und ist einer Person zugeordnet. Das System ist schnell, robust und einfach in der Handhabung.
 
+## Architecture
+
+```mermaid
+graph TD;
+A[fa:fa-database Zentrale Datenbank]-->|test|B;
+A-->C;
+B-->D;
+C-->D;
+```
+
 ## Documentation
 Please have a look at the [Wiki](https://github.com/nikcani/smart-inventory/wiki)
