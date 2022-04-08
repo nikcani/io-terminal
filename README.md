@@ -22,6 +22,7 @@ C-->|interacts with|D;
 C-->|authorizes at|E;
 E-->|activates user session|B;
 ```
+[edit graph](https://mermaid-js.github.io/mermaid-live-editor/)
 
 ## Documentation
 Please have a look at the [Wiki](https://github.com/nikcani/smart-inventory/wiki)
