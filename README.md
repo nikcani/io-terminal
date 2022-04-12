@@ -14,10 +14,12 @@ A[fa:fa-database Database];
 B[fa:fa-barcode Code Scanner];
 C[fa:fa-user User];
 D[fa:fa-desktop Device with Webbrowser];
-E[fa:fa-microchip NFC Scanner];
-F[fa:fa-dolly Product]
-G[fa:fa-box Location]
-D-->|fetches data from|A;
+E[fa:fa-wifi NFC Scanner];
+F[fa:fa-dolly Product];
+G[fa:fa-box Location];
+H[fa:fa-microchip LED Controller];
+I[fa:fa-lightbulb LEDs];
+D---|HTTP|A;
 C-->|uses|B;
 C-->|interacts with|D;
 C-->|authorizes at|E;
@@ -26,7 +28,9 @@ B-->|scans|F;
 F-->|scanned|B;
 B-->|scans|G;
 G-->|scanned|B;
-B-->|HTTP/REST|A;
+B---|HTTP/REST|A;
+H-->|controls|I;
+B-->|activates location light|H;
 ```
 [edit graph](https://mermaid-js.github.io/mermaid-live-editor/)
 
