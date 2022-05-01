@@ -2,14 +2,19 @@
 #include <arduino_secrets.h>
 #include <Wifi.h>
 #include <PubSubClient.h>
+#include <Adafruit_NeoPixel.h>
 
 #define PIN_NO_BUTTON 26
 #define PIN_NO_LED_RED 14
 #define PIN_NO_LED_GREEN 22
 #define PIN_NO_BUZZER 33
 
+#define PIN_NO_LED_STRIP 32
+#define LED_COUNT 6
+
 WiFiClient espClient;
 PubSubClient client(espClient);
+Adafruit_NeoPixel strip(LED_COUNT, PIN_NO_LED_STRIP, NEO_GRB + NEO_KHZ800);
 
 volatile bool buttonState;
 
@@ -86,8 +91,69 @@ static void mqtt_init(void) {
     client.setCallback(callback);
 }
 
+void test_led(int led_no) {
+    strip.setPixelColor(led_no, 255, 0, 0);
+    strip.show();
+    delay(1000);
+    strip.setPixelColor(led_no, 0, 255, 0);
+    strip.show();
+    delay(1000);
+    strip.setPixelColor(led_no, 0, 0, 255);
+    strip.show();
+    delay(1000);
+}
+
+void test_led_brightness(int led_no) {
+    strip.setBrightness(0);
+    strip.setPixelColor(led_no, 255, 0, 0);
+    strip.show();
+    delay(1000);
+    strip.setBrightness(8);
+    strip.setPixelColor(led_no, 255, 0, 0);
+    strip.show();
+    delay(1000);
+    strip.setBrightness(16);
+    strip.setPixelColor(led_no, 255, 0, 0);
+    strip.show();
+    delay(1000);
+    strip.setBrightness(32);
+    strip.setPixelColor(led_no, 255, 0, 0);
+    strip.show();
+    delay(1000);
+    strip.setBrightness(64);
+    strip.setPixelColor(led_no, 255, 0, 0);
+    strip.show();
+    delay(1000);
+    strip.setBrightness(128);
+    strip.setPixelColor(led_no, 255, 0, 0);
+    strip.show();
+    delay(1000);
+    strip.setBrightness(255);
+    strip.setPixelColor(led_no, 255, 0, 0);
+    strip.show();
+    delay(1000);
+}
+
+void led_strip_setup() {
+    strip.begin();
+    strip.show(); // Initialize all pixels to 'off'
+    delay(1000);
+    test_led(0);
+    test_led(1);
+    test_led(2);
+    test_led(3);
+    test_led(4);
+    test_led(5);
+    test_led_brightness(0);
+    test_led_brightness(1);
+    test_led_brightness(2);
+    test_led_brightness(3);
+    test_led_brightness(4);
+    test_led_brightness(5);
+}
+
 void setup() {
-    pinMode(PIN_NO_LED_RED, OUTPUT);
+    /*pinMode(PIN_NO_LED_RED, OUTPUT);
     digitalWrite(PIN_NO_LED_RED, LOW);
 
     pinMode(PIN_NO_LED_GREEN, OUTPUT);
@@ -97,7 +163,9 @@ void setup() {
     digitalWrite(PIN_NO_BUZZER, LOW);
 
     pinMode(PIN_NO_BUTTON, INPUT);
-    attachInterrupt(PIN_NO_BUTTON, buttonClicked, CHANGE);
+    attachInterrupt(PIN_NO_BUTTON, buttonClicked, CHANGE);*/
+
+    led_strip_setup();
 
     wifi_init();
 
