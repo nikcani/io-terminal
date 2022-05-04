@@ -4,7 +4,7 @@
 
 
 ## Abstract
-Das Smart Inventory System ermöglicht die schnelle und sichere Inventarisierung unterschiedlichster Objekte. Es ermöglicht die geordnete Ablage, einen guten Überblick und einen schnellen Zugriff. Jegliche Transaktion wird protokolliert und ist einer Person zugeordnet. Bei der Ausleihe und Rückgabe wird über ein Pick-by-light System Schnelligkeit und Ordnung garantiert.
+Das IoTerminal ermöglicht es Studierenden der TH-Köln das Abholen von angefragter Hardware aus dem things.moxd.io, ohne das ein Mitarbeiter anwesend seien muss. Ähnlich wie eine Packstation sorgt es für eine einfache Ausleihe und Rückgabe. Hierbei wird über ein Pick-by-light System Schnelligkeit und Ordnung garantiert. Jegliche Transaktion wird protokolliert und ist einer Person zugeordnet. 
 
 ## Architecture
 [back to wiki](https://github.com/nikcani/smart-inventory/wiki#architektur)
