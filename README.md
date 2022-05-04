@@ -1,4 +1,4 @@
-# Smart Inventory
+# IoTerminal
 
 ![key visual](https://raw.githubusercontent.com/nikcani/smart-inventory/main/key-visual.png)
 
