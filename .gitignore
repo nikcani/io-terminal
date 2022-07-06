@@ -3,3 +3,5 @@ src/secrets.h
 .vscode/c_cpp_properties.json
 .vscode/extensions.json
 .vscode/launch.json
+pi/request/snipe-it.env
+src/arduino_secrets.h
