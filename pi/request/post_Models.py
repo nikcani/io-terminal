@@ -1,7 +1,11 @@
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv('.\snipe-it.env')
 
 url = 'https://snipe-it.nikcani.de/api/v1/models'
-token= "Bearer <API TOKEN STEHT IN DISCORD>"
+token= "Bearer " + os.getenv('API_TOKEN')
 
 headers = {"Accept": "application/json",
             "Content-Type":"application/json",

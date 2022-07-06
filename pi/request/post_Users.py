@@ -1,8 +1,12 @@
 # funktioniert gerade nicht weil keine ahnung auch keine lust das gerade rauszufinden denn es ist 01:54 uhr morgens und ich denke mir "warum mache ich das? ich habe doch sooooo viel zeit, abdurrahman du, erstens hast einen super langen namen und zweitens führst hier gerade selbstgespräche in textform nur damit das deine kommulitonen lesen und sich denken "ist dieser typ behindert?" und meine antwort darauf wird nur sein "vielleicht" " und jetzt geh schlafen du idiot. ja ciao leute, VOLL-METAAAAA
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv('.\snipe-it.env')
 
 url = 'https://snipe-it.nikcani.de/api/v1/models'
-token= "Bearer <API TOKEN STEHT IN DISCORD>"
+token= "Bearer " + os.getenv('API_TOKEN')
 
 headers = {"Accept": "application/json",
             "Content-Type":"application/json",
