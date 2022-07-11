@@ -10,13 +10,8 @@
 volatile bool button_left;
 volatile bool button_right;
 
-void IRAM_ATTR
-
-buttonEventLeft();
-
-void IRAM_ATTR
-
-buttonEventRight();
+void IRAM_ATTR buttonEventLeft();
+void IRAM_ATTR buttonEventRight();
 
 Adafruit_NeoPixel strip;
 rgb_lcd lcd;
