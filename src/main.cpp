@@ -72,9 +72,18 @@ void setupButtons() {
 void testing() {
     Serial.println("testing started");
 
+    lightIndicator.showPixelColor(0, 255, 0, 0);
+    lightIndicator.showPixelColor(1, 0, 255, 0);
+    lightIndicator.showPixelColor(2, 0, 0, 255);
+    lightIndicator.showPixelColor(3, 255, 255, 255);
+    lightIndicator.showPixelColor(4, 255, 255, 0);
+    lightIndicator.showPixelColor(5, 0, 255, 255);
+
     lock.open();
     blinkInternalForOneSecond();
     lock.close();
+
+    lightIndicator.clear();
 
     Serial.println("testing done");
 }
@@ -93,8 +102,6 @@ void setup() {
     Serial.println("setup done");
 
     testing();
-
-    lightIndicator.clear();
 }
 
 void loop() {

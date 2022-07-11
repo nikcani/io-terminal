@@ -12,21 +12,14 @@ LightIndicator::LightIndicator() {
 
     // init to 'off'
     strip.show();
+}
 
-    testing();
+void LightIndicator::showPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b) {
+    strip.setPixelColor(n, r, g, b);
+    strip.show();
 }
 
 void LightIndicator::clear() {
     strip.clear();
-    strip.show();
-}
-
-void LightIndicator::testing() {
-    strip.setPixelColor(0, 255, 0, 0);
-    strip.setPixelColor(1, 0, 255, 0);
-    strip.setPixelColor(2, 0, 0, 255);
-    strip.setPixelColor(3, 255, 255, 255);
-    strip.setPixelColor(4, 255, 255, 0);
-    strip.setPixelColor(5, 0, 255, 255);
     strip.show();
 }
