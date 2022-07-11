@@ -1,22 +1,33 @@
-#include "lcd.h"
+#include "LCD.h"
 
-rgb_lcd setupLcdDisplay() {
+LCD::LCD() {
     Serial.println("setupLcdDisplay");
 
-    rgb_lcd lcd;
     lcd.begin(16, 2);
+    bgWhite();
+    printFirstRow("HELLO WORLD");
+    printSecondRow("LEFT       RIGHT");
+}
 
-    lcd.setRGB(255, 255, 255);
+void LCD::printFirstRow(String string) {
+    printRow(string, 0);
+    first_row = string;
+}
 
-    // first col
-    lcd.setCursor(0, 0);
-    lcd.print("HELLO WORLD");
+void LCD::printSecondRow(String string) {
+    printRow(string, 1);
+    second_row = string;
+}
 
-    // second col
-    lcd.setCursor(0, 1);
-    lcd.print("LEFT");
-    lcd.setCursor(10, 1);
-    lcd.print("RIGHT");
+void LCD::setRGB(unsigned char r, unsigned char g, unsigned char b) {
+    lcd.setRGB(r, g, b);
+}
 
-    return lcd;
+void LCD::bgWhite() {
+    setRGB(255, 255, 255);
+}
+
+void LCD::printRow(String string, int row) {
+    lcd.setCursor(0, row);
+    lcd.print(string);
 }

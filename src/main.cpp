@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
-#include <rgb_lcd.h>
 #include <Servo.h>
 
 #include <functions.h>
@@ -8,7 +7,7 @@
 #include "main_pins.h"
 
 Adafruit_NeoPixel strip;
-rgb_lcd lcd;
+LCD lcd;
 Servo servo;
 
 volatile bool button_left;
@@ -69,7 +68,7 @@ void setup() {
     Serial.println("setup started");
 
     strip = setupLedStrip(PIN_NO_LED_STRIP, LED_STRIP_LENGTH);
-    lcd = setupLcdDisplay();
+    lcd = LCD();
     servo = setupServo(PIN_NO_SERVO);
     setupInternalLed();
     setupButtons();
