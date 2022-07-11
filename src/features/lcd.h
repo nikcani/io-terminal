@@ -11,7 +11,15 @@ public:
 
     void setRGB(unsigned char r, unsigned char g, unsigned char b);
 
+    void bgRed();
+
+    void bgGreen();
+
+    void bgBlue();
+
     void bgWhite();
+
+    void clear();
 
 private:
     rgb_lcd lcd;
