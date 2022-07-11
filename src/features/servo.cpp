@@ -13,11 +13,11 @@ void closeLock(Servo servo) {
     servoWriteDelayed(servo, 140);
 }
 
-Servo setupServo(int pin) {
+Servo setupServo() {
     Serial.println("setupServo");
 
     Servo servo;
-    servo.attach(pin);
+    servo.attach(PIN_NO_SERVO);
     closeLock(servo);
 
     return servo;

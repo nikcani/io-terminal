@@ -69,7 +69,7 @@ void setup() {
 
     strip = setupLedStrip(PIN_NO_LED_STRIP, LED_STRIP_LENGTH);
     lcd = LCD();
-    servo = setupServo(PIN_NO_SERVO);
+    servo = setupServo();
     setupInternalLed();
     setupButtons();
 
