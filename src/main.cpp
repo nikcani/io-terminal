@@ -1,14 +1,11 @@
 #include <Arduino.h>
-#include <Adafruit_NeoPixel.h>
-#include <Servo.h>
-
 #include <functions.h>
 
 #include "main_pins.h"
 
-Adafruit_NeoPixel strip;
 LCD lcd;
 Servo servo;
+LightIndicator lightIndicator;
 
 volatile bool button_left;
 volatile bool button_right;
@@ -67,7 +64,7 @@ void setup() {
 
     Serial.println("setup started");
 
-    strip = setupLedStrip(PIN_NO_LED_STRIP, LED_STRIP_LENGTH);
+    lightIndicator = LightIndicator();
     lcd = LCD();
     servo = setupServo();
     setupInternalLed();
@@ -76,6 +73,8 @@ void setup() {
     Serial.println("setup done");
 
     testing();
+
+    lightIndicator.clear();
 }
 
 void loop() {
