@@ -1,4 +1,3 @@
 #!/bin/bash
 
-bash bin/buildAndUpload
-bash bin/listenToSerial
+bin/buildAndUpload && bin/listenToSerial
