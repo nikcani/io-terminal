@@ -5,10 +5,7 @@
 #include <secrets.h>
 #include <functions.h>
 
-#define PIN_NO_BUTTON_LEFT 33
-#define PIN_NO_BUTTON_RIGHT 26
-#define PIN_NO_LED_STRIP 14
-#define LED_STRIP_LENGTH 6
+#include "main_pins.h"
 
 volatile bool button_left;
 volatile bool button_right;
