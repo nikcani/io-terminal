@@ -2,3 +2,4 @@
 #include "features/led.h"
 #include "features/LightIndicator.h"
 #include "features/Lock.h"
+#include "features/SerialApi.h"

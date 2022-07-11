@@ -26,6 +26,7 @@
 LCD lcd;
 Lock lock;
 LightIndicator lightIndicator;
+SerialApi serialApi;
 
 volatile bool button_left;
 volatile bool button_right;
@@ -53,8 +54,7 @@ void buttonAction(int pin) {
         button_right = false;
         message = "button_right_pressed";
     }
-    Serial.println(message);
-    lcd.setRGB(0, 255, 0);
+    serialApi.write(message);
     delay(200);
     lcd.setRGB(255, 255, 255);
 }
@@ -82,11 +82,25 @@ void testing() {
     lightIndicator.clear();
 }
 
+void interpretPackage(String packet) {
+    lcd.bgBlue();
+    delay(200);
+    lcd.bgRed();
+    lcd.clear();
+    lcd.printFirstRow("interpretPackage");
+    lcd.printSecondRow(String(packet.length()));
+    delay(1000);
+    /*String first = packet.substring(0, 16);
+    String second = packet.substring(16, 32);
+    String third = packet.substring(32, 48);
+    lcd.clear();
+    lcd.printFirstRow(String(first.length()) + "x" + String(second.length()) + "x" + String(third.length()));
+    lcd.printSecondRow(first);
+    delay(1000);*/
+}
+
 void setup() {
-    Serial.begin(9600);
-
-    Serial.println("setup started");
-
+    serialApi = SerialApi();
     lightIndicator = LightIndicator();
     lcd = LCD();
     lock = Lock();
@@ -100,13 +114,6 @@ void loop() {
     if (button_left) buttonAction(PIN_NO_BUTTON_LEFT);
     if (button_right) buttonAction(PIN_NO_BUTTON_RIGHT);
 
-    /*if (Serial.available()) // Check to see if at least one character is available
-    {
-        char ch = Serial.read();
-        Serial.println(ch);
-        //if (ch >= '0' && ch <= '9') // is this an ascii digit between 0 and 9?
-        //{
-        //    blinkRate = (ch - '0'); // ASCII value converted to numeric value
-        //}
-    }*/
+    // Check to see if at least one character is available
+    if (Serial.available()) serialApi.actionListenerCycle(&interpretPackage);
 }
