@@ -1,4 +1,3 @@
-#include <Arduino.h>
-
-void blinkForX(int pin, int milliseconds);
-void blinkForOneSecond(int pin);
+#include "features/led.h"
+#include "features/servo.h"
+#include "features/strip.h"
