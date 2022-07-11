@@ -1,8 +1,6 @@
 #include "LCD.h"
 
 LCD::LCD() {
-    Serial.println("setupLcdDisplay");
-
     lcd.begin(16, 2);
     bgWhite();
     printFirstRow("HELLO WORLD");

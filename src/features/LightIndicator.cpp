@@ -3,8 +3,6 @@
 Adafruit_NeoPixel strip(LENGTH_LED_STRIP, PIN_NO_LED_STRIP, NEO_GRB + NEO_KHZ800);
 
 LightIndicator::LightIndicator() {
-    Serial.println("setupLightIndicator");
-
     strip.begin();
 
     // activate maximum brightness

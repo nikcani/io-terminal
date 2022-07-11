@@ -60,8 +60,6 @@ void buttonAction(int pin) {
 }
 
 void setupButtons() {
-    Serial.println("setupButtons");
-
     pinMode(PIN_NO_BUTTON_LEFT, INPUT);
     attachInterrupt(digitalPinToInterrupt(PIN_NO_BUTTON_LEFT), buttonEventLeft, CHANGE);
 
@@ -70,8 +68,6 @@ void setupButtons() {
 }
 
 void testing() {
-    Serial.println("testing started");
-
     lightIndicator.showPixelColor(0, 255, 0, 0);
     lightIndicator.showPixelColor(1, 0, 255, 0);
     lightIndicator.showPixelColor(2, 0, 0, 255);
@@ -84,8 +80,6 @@ void testing() {
     lock.close();
 
     lightIndicator.clear();
-
-    Serial.println("testing done");
 }
 
 void setup() {
@@ -99,9 +93,7 @@ void setup() {
     setupInternalLed();
     setupButtons();
 
-    Serial.println("setup done");
-
-    testing();
+    //testing();
 }
 
 void loop() {

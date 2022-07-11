@@ -1,8 +1,6 @@
 #include "Lock.h"
 
 Lock::Lock() {
-    Serial.println("setupLock");
-
     servo.attach(PIN_NO_SERVO);
     close();
 }
