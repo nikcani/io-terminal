@@ -1,0 +1,3 @@
+#!/bin/bash
+
+bin/buildAndUpload && ./venv/bin/python esp-api.py debug
