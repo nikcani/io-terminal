@@ -24,7 +24,7 @@
 #define PIN_NO_BUTTON_RIGHT D7
 
 LCD lcd;
-Servo servo;
+Lock lock;
 LightIndicator lightIndicator;
 
 volatile bool button_left;
@@ -72,9 +72,9 @@ void setupButtons() {
 void testing() {
     Serial.println("testing started");
 
-    openLock(servo);
+    lock.open();
     blinkInternalForOneSecond();
-    closeLock(servo);
+    lock.close();
 
     Serial.println("testing done");
 }
@@ -86,7 +86,7 @@ void setup() {
 
     lightIndicator = LightIndicator();
     lcd = LCD();
-    servo = setupServo();
+    lock = Lock();
     setupInternalLed();
     setupButtons();
 
