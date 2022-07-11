@@ -27,6 +27,22 @@ void buttonEventRight() {
     button_right = digitalRead(PIN_NO_BUTTON_RIGHT);;
 }
 
+void buttonAction(int pin) {
+    String message;
+    if (pin == PIN_NO_BUTTON_LEFT) {
+        button_left = false;
+        message = "button_left_pressed";
+    }
+    if (pin == PIN_NO_BUTTON_RIGHT) {
+        button_right = false;
+        message = "button_right_pressed";
+    }
+    Serial.println(message);
+    lcd.setRGB(0, 255, 0);
+    delay(200);
+    lcd.setRGB(255, 255, 255);
+}
+
 void setupButtons() {
     Serial.println("setupButtons");
 
@@ -80,22 +96,6 @@ void setup() {
     Serial.println("setup done");
 
     testing();
-}
-
-void buttonAction(int pin) {
-    String message;
-    if (pin == PIN_NO_BUTTON_LEFT) {
-        button_left = false;
-        message = "button_left_pressed";
-    }
-    if (pin == PIN_NO_BUTTON_RIGHT) {
-        button_right = false;
-        message = "button_right_pressed";
-    }
-    Serial.println(message);
-    lcd.setRGB(0, 255, 0);
-    delay(200);
-    lcd.setRGB(255, 255, 255);
 }
 
 void loop() {
