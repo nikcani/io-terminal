@@ -7,6 +7,10 @@
 
 #include "main_pins.h"
 
+Adafruit_NeoPixel strip;
+rgb_lcd lcd;
+Servo servo;
+
 volatile bool button_left;
 volatile bool button_right;
 
@@ -14,10 +18,6 @@ volatile bool button_right;
 void IRAM_ATTR buttonEventLeft();
 void IRAM_ATTR buttonEventRight();
 // @formatter:on
-
-Adafruit_NeoPixel strip;
-rgb_lcd lcd;
-Servo servo;
 
 void buttonEventLeft() {
     button_left = digitalRead(PIN_NO_BUTTON_LEFT);;
