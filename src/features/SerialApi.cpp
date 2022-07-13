@@ -5,7 +5,9 @@ SerialApi::SerialApi() {
     resetBuffer();
 }
 
-void SerialApi::write(String string) {}
+void SerialApi::write(String string) {
+    Serial.println(string);
+}
 
 void SerialApi::actionListenerCycle(void (*callback)(String)) {
     char readChar = Serial.read();
