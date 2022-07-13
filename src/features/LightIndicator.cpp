@@ -8,8 +8,7 @@ LightIndicator::LightIndicator() {
     // activate maximum brightness
     strip.setBrightness(255);
 
-    // init to 'off'
-    strip.show();
+    clear();
 }
 
 void LightIndicator::showPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b) {
