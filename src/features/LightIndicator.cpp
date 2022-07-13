@@ -18,6 +18,12 @@ void LightIndicator::showPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b)
 }
 
 void LightIndicator::clear() {
+    showPixelColor(0, 0, 0, 0);
+    showPixelColor(1, 0, 0, 0);
+    showPixelColor(2, 0, 0, 0);
+    showPixelColor(3, 0, 0, 0);
+    showPixelColor(4, 0, 0, 0);
+    showPixelColor(5, 0, 0, 0);
     strip.clear();
     strip.show();
 }
