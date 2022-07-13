@@ -2,5 +2,6 @@
 .vscode/c_cpp_properties.json
 .vscode/extensions.json
 .vscode/launch.json
+clion-log.txt
 pi/request/snipe-it.env
 src/arduino_secrets.h
