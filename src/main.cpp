@@ -85,20 +85,22 @@ void testing() {
 }
 
 void interpretPacket(String packet) {
+    String action = packet.substring(0, 16);
+    String data_1 = packet.substring(16, 32);
+    String data_2 = packet.substring(32, 48);
+
+    action.trim();
+
     lcd.bgBlue();
-    delay(200);
-    lcd.bgRed();
     lcd.clear();
-    lcd.printFirstRow("interpretPacket");
-    lcd.printSecondRow(String(packet.length()));
+    if (action == "lock_open") {
+        lock.open();
+    } else if (action == "lock_close") {
+        lock.close();
+    }
+    lcd.printFirstRow(action);
+    lcd.printSecondRow(String(action.length()));
     delay(1000);
-    /*String first = packet.substring(0, 16);
-    String second = packet.substring(16, 32);
-    String third = packet.substring(32, 48);
-    lcd.clear();
-    lcd.printFirstRow(String(first.length()) + "x" + String(second.length()) + "x" + String(third.length()));
-    lcd.printSecondRow(first);
-    delay(1000);*/
 }
 
 void setup() {
