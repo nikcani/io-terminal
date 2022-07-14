@@ -84,12 +84,12 @@ void testing() {
     lightIndicator.clear();
 }
 
-void interpretPackage(String packet) {
+void interpretPacket(String packet) {
     lcd.bgBlue();
     delay(200);
     lcd.bgRed();
     lcd.clear();
-    lcd.printFirstRow("interpretPackage");
+    lcd.printFirstRow("interpretPacket");
     lcd.printSecondRow(String(packet.length()));
     delay(1000);
     /*String first = packet.substring(0, 16);
@@ -117,5 +117,5 @@ void loop() {
     if (button_right) buttonAction(PIN_NO_BUTTON_RIGHT);
 
     // Check to see if at least one character is available
-    if (Serial.available()) serialApi.actionListenerCycle(&interpretPackage);
+    if (Serial.available()) serialApi.actionListenerCycle(&interpretPacket);
 }
