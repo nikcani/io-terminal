@@ -10,9 +10,6 @@ public:
 
 private:
     String buffer;
-    String packet;
-
-    void nextPackage(void (*callback)(String));
 
     void resetBuffer();
 };
