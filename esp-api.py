@@ -41,6 +41,10 @@ def lock_open():
     write_package("lock_open")
 
 
+def lock_close():
+    write_package("lock_close")
+
+
 print_if_debug("python script started")
 
 mode = "listen"
@@ -64,8 +68,11 @@ if mode == "listen":
                 button_right_pressed()
     except KeyboardInterrupt:
         print_if_debug("interrupt")
-elif mode == "lock_open":
+elif mode == "lock":
+    sleep(2)
     lock_open()
+    sleep(2)
+    lock_close()
 elif mode == "debug":
     sleep(2)
     write_package("display_print", "HELLO WORLD!", "YES           NO")
