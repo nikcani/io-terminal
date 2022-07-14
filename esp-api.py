@@ -1,7 +1,7 @@
+import sys
 from time import sleep
 
 import serial
-import sys
 
 DEBUG = True
 
