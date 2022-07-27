@@ -1,4 +1,4 @@
-# ein pair besteht aus einem (-er) schliesßfach (-nummer) ((links) in dem fall von 1-6) und der ID des Users (rechts)
+# ein pair besteht aus einem/einer schliesßfach/-nummer ((links) in dem fall von 1-6) und der ID des Users (rechts)
 # ist die ID leer dann ist das schließfach auch leer
 # man kann durch ein hinzufügen eines dritten elements auch den inhalt des schließfaches einbetten erfordert aber kleine modifikationen im code
 
