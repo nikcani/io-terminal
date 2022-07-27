@@ -2,6 +2,8 @@
 # ist die ID leer dann ist das schließfach auch leer
 # man kann durch ein hinzufügen eines dritten elements auch den inhalt des schließfaches einbetten erfordert aber kleine modifikationen im code
 
+// boxAndCollectors
+
 def getUserIDFormRFID(): return "Abdurrahman"   # psydo RFID
 
 SFsAndIDs = [(1,"Lisa"),(2,"Fuhrmann"),(3,"Niklas"),(4,"Canisius"),(5,""),(6,"Karakan")]
