@@ -1,7 +1,7 @@
-.pio/
+esp/.pio/
 .vscode/c_cpp_properties.json
 .vscode/extensions.json
 .vscode/launch.json
 clion-log.txt
-pi/request/snipe-it.env
-src/arduino_secrets.h
+proof_of_concept/request/snipe-it.env
+pi/venv

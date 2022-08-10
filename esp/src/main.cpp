@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <functions.h>
+#include "functions.h"
 
 /*
  * Pinout
