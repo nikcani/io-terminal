@@ -98,9 +98,6 @@ void interpretPacket(String packet) {
     } else if (action == "lock_close") {
         lock.close();
     }
-    lcd.printFirstRow(action);
-    lcd.printSecondRow(String(action.length()));
-    delay(1000);
 }
 
 void setup() {
