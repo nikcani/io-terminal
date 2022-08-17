@@ -5,3 +5,4 @@ esp/.pio/
 clion-log.txt
 proof_of_concept/request/snipe-it.env
 pi/venv
+.pio
