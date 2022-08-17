@@ -14,15 +14,19 @@ def decodeCam(image):
     barcodes = pyzbar.decode(gray)
     print('reading...', end='\r')
     for barcode in barcodes:
-        barcodeData = barcode.data.decode()
-        barcodeType = barcode.type
-        print("["+str(datetime.now())+"] Type:{} | Data: {}".format(barcodeType, barcodeData))
-    return image
+      barcodeData = barcode.data.decode('utf-8')
+      barcodeType = barcode.type
+      print("["+str(datetime.now())+"] Type:{} | Data: {}".format(barcodeType, barcodeData))
+      return barcodeData
 
-try:
- while True:
-# Read current frame
-  ret, frame = camera.read()
-  im=decodeCam(frame)
-except KeyboardInterrupt:
- print('interrupted!')
+def getQRCodeData():  
+  try:
+    im = None
+    while im is None:
+      # Read current frame
+      ret, frame = camera.read()
+      im=decodeCam(frame)
+      if im is not None:
+        return im
+  except KeyboardInterrupt:
+    print('interrupted!')

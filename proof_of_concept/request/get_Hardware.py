@@ -26,11 +26,15 @@ def getDeployedUsers():
     #print(json_object["rows"][0]['assigned_to']['username'])
 
     myListe =[]
-    for row in json_object["rows"]:
-
-        if not (row['assigned_to']['username'] is None):
-            myListe.append(row['assigned_to']['username'])
-            print(row['assigned_to']['username'])
-            print("============================")
-
+    myrows = json_object["rows"]
+    for row in myrows:
+        if (row['assigned_to']) is not None:
+                # myListe.append(row['assigned_to']['username'])
+                print(row['assigned_to']['username'])
+                print("============================")
+                objectIDAndUser = (row['assigned_to']['username'],row['id'],)
+                myListe.append(objectIDAndUser)
+    print(myListe)
     return myListe
+
+getDeployedUsers()

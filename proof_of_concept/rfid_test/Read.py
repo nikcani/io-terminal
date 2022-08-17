@@ -12,3 +12,5 @@ def myRead():
                 return text
         finally:
                 GPIO.cleanup()
+
+myRead()
