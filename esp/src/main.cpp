@@ -91,16 +91,22 @@ void interpretPacket(String packet) {
 
     action.trim();
 
-    lcd.bgBlue();
-    lcd.clear();
-    if (action == "lock_open") {
+    if (action == "display_print") {
+        lcd.printFirstRow(data_1);
+        lcd.printSecondRow(data_2);
+    } else if (action == "display_clear") {
+        lcd.clear();
+    } else if (action == "display_color") {
+        lcd.setRGB(data_1.substring(0, 2).toInt(), data_1.substring(4, 6).toInt(), data_1.substring(8, 10).toInt());
+    } else if (action == "li_activate") {
+        lightIndicator.showPixelColor(data_1.toInt(), data_2.substring(0, 2).toInt(), data_2.substring(4, 6).toInt(), data_2.substring(8, 10).toInt());
+    } else if (action == "li_clear") {
+        lightIndicator.clear();
+    } else if (action == "lock_open") {
         lock.open();
     } else if (action == "lock_close") {
         lock.close();
     }
-    lcd.printFirstRow(action);
-    lcd.printSecondRow(String(action.length()));
-    delay(1000);
 }
 
 void setup() {

@@ -35,7 +35,7 @@ class SerialApi:
         self.print_if_debug(str.encode(string))
 
     def write_package_line(self, string):
-        string = string.replace("#", "=")
+        string = str(string).replace("#", "=")
         string += "                "
         self.write_line(string[0:16])
 
@@ -58,7 +58,7 @@ class SerialApi:
         self.write_package('li_clear')
 
     def li_activate(self, led, color):
-        self.write_package('display_color', led, color)
+        self.write_package('li_activate', led, color)
 
     def lock_open(self):
         self.write_package("lock_open")

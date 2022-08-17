@@ -3,8 +3,6 @@
 LCD::LCD() {
     lcd.begin(16, 2);
     bgWhite();
-    printFirstRow("HELLO WORLD");
-    printSecondRow("LEFT       RIGHT");
 }
 
 void LCD::printFirstRow(String string) {
