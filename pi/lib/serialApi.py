@@ -35,7 +35,7 @@ class SerialApi:
         self.print_if_debug(str.encode(string))
 
     def write_package_line(self, string):
-        string = string.replace("#", "=")
+        string = str(string).replace("#", "=")
         string += "                "
         self.write_line(string[0:16])
 
