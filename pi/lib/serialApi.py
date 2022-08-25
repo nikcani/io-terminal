@@ -5,7 +5,7 @@ class SerialApi:
     def __init__(self, debug=True):
         self.debug = debug
         self.ser = serial.Serial()
-        self.ser.port = '/dev/tty.usbserial-0001'
+        self.ser.port = '/dev/ttyUSB0'
         self.ser.baudrate = 9600
         self.ser.open()
 
