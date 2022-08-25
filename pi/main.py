@@ -24,3 +24,5 @@ sleep(2)
 serialApi.lock_close()
 sleep(2)
 serialApi.display_print("test the", "hashtag#filter")
+
+del serialApi
