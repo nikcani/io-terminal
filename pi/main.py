@@ -26,5 +26,9 @@ sleep(2)
 serialApi.display_print("test the", "hashtag#filter")
 sleep(2)
 serialApi.display_print("HELLO WORLD!", "YES           NO")
+sleep(2)
+serialApi.display_color("000 255 000")
+sleep(2)
+serialApi.li_activate(4, "000 255 000")
 
 del serialApi
