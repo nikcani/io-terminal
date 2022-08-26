@@ -36,5 +36,3 @@ def getDeployedUsers():
                 myListe.append(objectIDAndUser)
     print(myListe)
     return myListe
-
-getDeployedUsers()

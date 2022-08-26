@@ -6,3 +6,5 @@ clion-log.txt
 proof_of_concept/request/snipe-it.env
 pi/venv
 .pio
+pi/request/snipe-it.env
+src/arduino_secrets.h

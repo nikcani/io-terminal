@@ -1,12 +1,20 @@
 import requests
+import json
 
-def hardwareCheckin(id):
+def hardwareCheckinToRTD(id):
     id = int(id)
+
+
+
+
+
+
+
+
     url = "https://snipe-it.nikcani.de/api/v1/hardware/{}/checkin".format(id)
 
     payload = {
-        #status id 8 = zurückgeben
-        "status_id": 8
+        "status_id": 2
     }
     headers = {
         "Accept": "application/json",
@@ -17,3 +25,5 @@ def hardwareCheckin(id):
     response = requests.post(url, json=payload, headers=headers)
 
     print(response.text)
+
+hardwareCheckinToRTD(2)

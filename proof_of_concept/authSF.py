@@ -4,13 +4,15 @@
 
 import json
 from telnetlib import STATUS
-import Read as myRead
+import rfid_test.Read as myRead
 import request.get_Hardware as myReq
 # import request.post_HardwareStatus as ChangeHwStatus
 import request.post_hardwareCheckout as hwCheckOUT
 import request.post_HardwareCheckin as hwCheckIN
+import request.patch_changeHardwareStatus as changeHWStatusTo
 import qrcode.qrCodeReader as qrCodeReader
 import request.get_searchUserByAssetID as getSUBAssedID
+import request.get_hardwareByStatus as getHWbyStatus
 
 def getUserIDFormRFID():
     username = myRead.myRead().strip()  # RFID von der Karte
@@ -21,7 +23,7 @@ def getUserIDFormRFID():
     return username
 
 boxAndCollectors =  [(1,( '','')), (2, ('Karakan','000069')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
-
+print(boxAndCollectors)
 temp = boxAndCollectors # testing || Orginal zustand der liste
 
 userRFID = getUserIDFormRFID()
@@ -44,11 +46,21 @@ def whereUserItem(UserID):
     print("Order leider nicht vorhanden")
     return False
 
-#
 def addOrderNextFreeSfFor(UserID):
-    if userRFID == "admin":
+    if UserID == "admin":
+        # button reinlegen Hier
         #admin wenn er/sie etwas rausnehmen will
-        # code fürs rausnehmen hier 
+        rbListe = getHWbyStatus.getHardwareByStatus()
+        if (rbListe is None):
+            print("nichts da")
+        for assTag, id in rbListe:
+            openSF()
+            
+            for sf,name,assetID in boxAndCollectors:
+                if name == "admin":
+                    boxAndCollectors[sf-1] = (sf,('',''))
+                    hwCheckIN.hardwareCheckin(id)
+            closeSF()
         #admin wenn er/sie erwas reinlegen will
         assetID = qrCodeReader.getQRCodeData()
         username = getSUBAssedID.getHardwareByAssetID(str(assetID))
@@ -58,62 +70,56 @@ def addOrderNextFreeSfFor(UserID):
             return False
         openSF()
         boxAndCollectors[sf-1] = (sf,(username,assetID)) #-1 weil ein array fängt bei 0 an, duh
-        closeSF()
-        
-
-        
+        changeHWStatusTo.hardwareStatusToAbholbereit(int(assetID))
+        closeSF()      
+        print("==========Admin nimmt Heraus===================")
+        print(boxAndCollectors)
+        print("==========Admin nahm Heraus===================")
     else:
+        #User Kontext
         sf = isThereSpace()
         if not (sf):
             print ("Alle Schließfächer sind voll")
             return False
-        #pseudo ID erwarte es vom QR Scanner
         assetID = qrCodeReader.getQRCodeData()
         openSF()
-        boxAndCollectors[sf-1] = (sf,(UserID,assetID)) #-1 weil ein array fängt bei 0 an, duh
-        
-        hwCheckIN.hardwareCheckin(UserID,assetID)
+        boxAndCollectors[sf-1] = (sf,("admin",assetID)) #-1 weil ein array fängt bei 0 an, duh
+        changeHWStatusTo.hardwareStatusToRueckgabebereit(int(assetID))
         closeSF()
         print ("Die Bestellung des Users {} wurde in das Schließfach {} hinzugefügt".format(UserID,sf))
     return True
 
 
-# def userTakesItem(UserID):
-#     sf, (userRFID, assetID ) = whereUserItem(UserID)
-#     if not (sf): 
-#         print("Item nicht im Schließfach.")
-#         return False
-#     openSF()
-#     boxAndCollectors[sf-1] = (sf,("",'')) # Mereke: Leere ID = Kein Item
+def userTakesItem(UserID):
+    sf, (userRFID, assetID ) = whereUserItem(UserID)
+    if not (sf): 
+        print("Item nicht im Schließfach.")
+        return False
+    openSF()
+    boxAndCollectors[sf-1] = (sf,("",'')) # Mereke: Leere ID = Kein Item
     
-#     #id = asset id
-#     print("User {} hat item aus dem fach herausgenommen".format(UserID))
-#     hwCheckOUT.hardwareCeckout(UserID,assetID)
-#     closeSF()
-#     return True
+    #id = asset id
+    print("User {} hat item aus dem fach herausgenommen".format(UserID))
+    hwCheckOUT.hardwareCheckout(UserID,assetID)
+    closeSF()
+    return True
 
-
-
-
-def sendMsgPutToTerminal(): return
 
 def getAssetIDFromQRScanner(): return "00002"
 
 def openSF(): print("Schließfach öffnen")
 def closeSF(): print("Schließfach schließen")
 
-#for user in myReq.getDeployedUsers():
-#    addOrderNextFreeSfFor(user)
-
 
 # Tests
+print(temp)
 print(boxAndCollectors)
 print("======================")
 addOrderNextFreeSfFor(userRFID)
 print("======================")
 print(boxAndCollectors)
 print("======================")
-#userTakesItem(userRFID)
+userTakesItem(userRFID)
 print("======================")
 print(boxAndCollectors)
 print(temp)

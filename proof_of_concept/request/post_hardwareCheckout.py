@@ -1,7 +1,7 @@
 import json
 import requests
 
-def hardwareCeckout(userID,id):
+def hardwareCheckout(userID,id):
     url = "https://snipe-it.nikcani.de/api/v1/hardware/{}/checkout".format(id)
 
     users = json.loads(getUsers())['rows']
