@@ -61,6 +61,9 @@ def addOrderNextFreeSfFor(UserID):
                     boxAndCollectors[sf-1] = (sf,('',''))
                     hwCheckIN.hardwareCheckin(id)
             closeSF()
+        print("==========Admin nimmt Heraus===================")
+        print(boxAndCollectors)
+        print("==========Admin nahm Heraus===================")
         #admin wenn er/sie erwas reinlegen will
         assetID = qrCodeReader.getQRCodeData()
         username = getSUBAssedID.getHardwareByAssetID(str(assetID))
@@ -72,9 +75,9 @@ def addOrderNextFreeSfFor(UserID):
         boxAndCollectors[sf-1] = (sf,(username,assetID)) #-1 weil ein array fängt bei 0 an, duh
         changeHWStatusTo.hardwareStatusToAbholbereit(int(assetID))
         closeSF()      
-        print("==========Admin nimmt Heraus===================")
+        print("==========Admin legt hinein===================")
         print(boxAndCollectors)
-        print("==========Admin nahm Heraus===================")
+        print("==========Admin legte hinein===================")
     else:
         #User Kontext
         sf = isThereSpace()
