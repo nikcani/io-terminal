@@ -22,7 +22,7 @@ def getUserIDFormRFID():
     print("======================================")
     return username
 
-boxAndCollectors =  [(1,( '','')), (2, ('Karakan','000069')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
+boxAndCollectors =  [(1,( 'Fuhrmann','00002')), (2, ('Karakan','000069')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
 print(boxAndCollectors)
 temp = boxAndCollectors # testing || Orginal zustand der liste
 
@@ -100,7 +100,7 @@ def userTakesItem(UserID):
     
     #id = asset id
     print("User {} hat item aus dem fach herausgenommen".format(UserID))
-    hwCheckOUT.hardwareCheckout(UserID,assetID)
+    changeHWStatusTo.hardwareStatusToAbgeholt(int(assetID))
     closeSF()
     return True
 
@@ -115,7 +115,7 @@ def closeSF(): print("Schließfach schließen")
 print(temp)
 print(boxAndCollectors)
 print("======================")
-addOrderNextFreeSfFor(userRFID)
+#addOrderNextFreeSfFor(userRFID)
 print("======================")
 print(boxAndCollectors)
 print("======================")
