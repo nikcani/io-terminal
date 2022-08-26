@@ -26,7 +26,7 @@ boxAndCollectors =  [(1,( 'Karakan','000069')), (2, ('','')), (3,('','')), (4,('
 print(boxAndCollectors)
 temp = boxAndCollectors # testing || Orginal zustand der liste
 
-userRFID = getUserIDFormRFID()
+
 
 # suche nach dem NÄCHSTEN FREIEN platz
 def isThereSpace():
@@ -48,35 +48,44 @@ def whereUserItem(UserID):
 
 
 def adminAddsOrder():
-    #admin wenn er/sie erwas reinlegen will
-    assetID = qrCodeReader.getQRCodeData()
-    username = getSUBAssedID.getHardwareByAssetID(str(assetID))
-    sf = isThereSpace()
-    if not (sf):
-        print ("Alle Schließfächer sind voll")
-        return False
-    openSF()
-    boxAndCollectors[sf-1] = (sf,(username,assetID)) #-1 weil ein array fängt bei 0 an, duh
-    changeHWStatusTo.hardwareStatusToAbholbereit(int(assetID))
-    closeSF()      
-    print("==========Admin legt hinein===================")
-    print(boxAndCollectors)
-    print("==========Admin legte hinein===================")
+    userRFID = getUserIDFormRFID()
+    if userRFID == "admin":
+        #admin wenn er/sie erwas reinlegen will
+        assetID = qrCodeReader.getQRCodeData()
+        username = getSUBAssedID.getHardwareByAssetID(str(assetID))
+        sf = isThereSpace()
+        if not (sf):
+            print ("Alle Schließfächer sind voll")
+            return False
+        openSF()
+        boxAndCollectors[sf-1] = (sf,(username,assetID)) #-1 weil ein array fängt bei 0 an, duh
+        changeHWStatusTo.hardwareStatusToAbholbereit(int(assetID))
+        closeSF()      
+        print("==========Admin legt hinein===================")
+        print(boxAndCollectors)
+        print("==========Admin legte hinein===================")
+    else:
+        print("DU BIST KEIN ADMIN!!!!")
 
 def adminTakesOrder():
-    # button reinlegen Hier
-    #admin wenn er/sie etwas rausnehmen will
-    for sf,(name,assetID) in boxAndCollectors:
-        if name == "admin":
-            boxAndCollectors[sf-1] = (sf,('',''))
-            hwCheckIN.hardwareCheckin(int(assetID))
-    closeSF()
-    print("==========Admin nimmt Heraus===================")
-    print(boxAndCollectors)
-    print("==========Admin nahm Heraus===================")
+    userRFID = getUserIDFormRFID()
+    if userRFID == "admin":
+        # button reinlegen Hier
+        #admin wenn er/sie etwas rausnehmen will
+        for sf,(name,assetID) in boxAndCollectors:
+            if name == "admin":
+                boxAndCollectors[sf-1] = (sf,('',''))
+                hwCheckIN.hardwareCheckin(int(assetID))
+        closeSF()
+        print("==========Admin nimmt Heraus===================")
+        print(boxAndCollectors)
+        print("==========Admin nahm Heraus===================")
+    else:
+        print("DU BIST KEIN ADMIN!!!!")
 
-def userBringsItemBack(UserID):
+def userBringsItemBack():
     #User Kontext
+    UserID = getUserIDFormRFID()
     sf = isThereSpace()
     if not (sf):
         print ("Alle Schließfächer sind voll")
@@ -91,7 +100,8 @@ def userBringsItemBack(UserID):
     return True
 
 
-def userTakesItem(UserID):
+def userTakesItem():
+    UserID = getUserIDFormRFID()
     sf, (userRFID, assetID ) = whereUserItem(UserID)
     if not (sf): 
         print("Item nicht im Schließfach.")
@@ -121,10 +131,10 @@ print(temp)
 print(boxAndCollectors)
 print("======================")
 print("USER TAKES ITEM")
-userTakesItem(userRFID)
+userTakesItem()
 print("======================")
 print("USER BRINGS ITEM BACK")
-userBringsItemBack(userRFID)
+userBringsItemBack()
 print("======================")
 print(boxAndCollectors)
 print("======================")
