@@ -22,7 +22,7 @@ def getUserIDFormRFID():
     print("======================================")
     return username
 
-boxAndCollectors =  [(1,( '','')), (2, ('Karakan','000069')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
+boxAndCollectors =  [(1,( 'admin','00002')), (2, ('Karakan','000069')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
 print(boxAndCollectors)
 temp = boxAndCollectors # testing || Orginal zustand der liste
 
