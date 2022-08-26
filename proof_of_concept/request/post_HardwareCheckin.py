@@ -5,7 +5,7 @@ def hardwareCheckin(id):
     url = "https://snipe-it.nikcani.de/api/v1/hardware/{}/checkin".format(id)
 
     payload = {
-        #status id 8 = zurückgeben
+        #status id 8 = zurückgegeben
         "status_id": 8
     }
     headers = {

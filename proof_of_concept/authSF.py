@@ -50,17 +50,11 @@ def addOrderNextFreeSfFor(UserID):
     if UserID == "admin":
         # button reinlegen Hier
         #admin wenn er/sie etwas rausnehmen will
-        rbListe = getHWbyStatus.getHardwareByStatus()
-        if (rbListe is None):
-            print("nichts da")
-        for assTag, id in rbListe:
-            openSF()
-            
-            for sf,(name,assetID) in boxAndCollectors:
-                if name == "admin":
-                    boxAndCollectors[sf-1] = (sf,('',''))
-                    hwCheckIN.hardwareCheckin(id)
-            closeSF()
+        for sf,(name,assetID) in boxAndCollectors:
+            if name == "admin":
+                boxAndCollectors[sf-1] = (sf,('',''))
+                hwCheckIN.hardwareCheckin(int(assetID))
+        closeSF()
         print("==========Admin nimmt Heraus===================")
         print(boxAndCollectors)
         print("==========Admin nahm Heraus===================")
