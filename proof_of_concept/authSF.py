@@ -22,7 +22,7 @@ def getUserIDFormRFID():
     print("======================================")
     return username
 
-boxAndCollectors =  [(1,( 'Fuhrmann','00002')), (2, ('Karakan','000069')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
+boxAndCollectors =  [(1,( '','')), (2, ('Karakan','000069')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
 print(boxAndCollectors)
 temp = boxAndCollectors # testing || Orginal zustand der liste
 
@@ -81,6 +81,7 @@ def addOrderNextFreeSfFor(UserID):
         if not (sf):
             print ("Alle Schließfächer sind voll")
             return False
+        print("Im Schließfach NR.: {} ist platz".format(sf))
         assetID = qrCodeReader.getQRCodeData()
         openSF()
         boxAndCollectors[sf-1] = (sf,("admin",assetID)) #-1 weil ein array fängt bei 0 an, duh
@@ -115,11 +116,11 @@ def closeSF(): print("Schließfach schließen")
 print(temp)
 print(boxAndCollectors)
 print("======================")
-#addOrderNextFreeSfFor(userRFID)
+addOrderNextFreeSfFor(userRFID)
 print("======================")
 print(boxAndCollectors)
 print("======================")
-userTakesItem(userRFID)
+#userTakesItem(userRFID)
 print("======================")
 print(boxAndCollectors)
 print(temp)
