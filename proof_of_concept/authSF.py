@@ -56,7 +56,7 @@ def addOrderNextFreeSfFor(UserID):
         for assTag, id in rbListe:
             openSF()
             
-            for sf,name,assetID in boxAndCollectors:
+            for sf,(name,assetID) in boxAndCollectors:
                 if name == "admin":
                     boxAndCollectors[sf-1] = (sf,('',''))
                     hwCheckIN.hardwareCheckin(id)
