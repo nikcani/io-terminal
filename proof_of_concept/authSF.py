@@ -22,7 +22,7 @@ def getUserIDFormRFID():
     print("======================================")
     return username
 
-boxAndCollectors =  [(1,( 'admin','00002')), (2, ('Karakan','000069')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
+boxAndCollectors =  [(1,( 'Karakan','000069')), (2, ('','')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
 print(boxAndCollectors)
 temp = boxAndCollectors # testing || Orginal zustand der liste
 
@@ -46,45 +46,48 @@ def whereUserItem(UserID):
     print("Order leider nicht vorhanden")
     return False
 
-def addOrderNextFreeSfFor(UserID):
-    if UserID == "admin":
-        # button reinlegen Hier
-        #admin wenn er/sie etwas rausnehmen will
-        for sf,(name,assetID) in boxAndCollectors:
-            if name == "admin":
-                boxAndCollectors[sf-1] = (sf,('',''))
-                hwCheckIN.hardwareCheckin(int(assetID))
-        closeSF()
-        print("==========Admin nimmt Heraus===================")
-        print(boxAndCollectors)
-        print("==========Admin nahm Heraus===================")
-        #admin wenn er/sie erwas reinlegen will
-        assetID = qrCodeReader.getQRCodeData()
-        username = getSUBAssedID.getHardwareByAssetID(str(assetID))
-        sf = isThereSpace()
-        if not (sf):
-            print ("Alle Schließfächer sind voll")
-            return False
-        openSF()
-        boxAndCollectors[sf-1] = (sf,(username,assetID)) #-1 weil ein array fängt bei 0 an, duh
-        changeHWStatusTo.hardwareStatusToAbholbereit(int(assetID))
-        closeSF()      
-        print("==========Admin legt hinein===================")
-        print(boxAndCollectors)
-        print("==========Admin legte hinein===================")
-    else:
-        #User Kontext
-        sf = isThereSpace()
-        if not (sf):
-            print ("Alle Schließfächer sind voll")
-            return False
-        print("Im Schließfach NR.: {} ist platz".format(sf))
-        assetID = qrCodeReader.getQRCodeData()
-        openSF()
-        boxAndCollectors[sf-1] = (sf,("admin",assetID)) #-1 weil ein array fängt bei 0 an, duh
-        changeHWStatusTo.hardwareStatusToRueckgabebereit(int(assetID))
-        closeSF()
-        print ("Die Bestellung des Users {} wurde in das Schließfach {} hinzugefügt".format(UserID,sf))
+
+def adminAddsOrder():
+    #admin wenn er/sie erwas reinlegen will
+    assetID = qrCodeReader.getQRCodeData()
+    username = getSUBAssedID.getHardwareByAssetID(str(assetID))
+    sf = isThereSpace()
+    if not (sf):
+        print ("Alle Schließfächer sind voll")
+        return False
+    openSF()
+    boxAndCollectors[sf-1] = (sf,(username,assetID)) #-1 weil ein array fängt bei 0 an, duh
+    changeHWStatusTo.hardwareStatusToAbholbereit(int(assetID))
+    closeSF()      
+    print("==========Admin legt hinein===================")
+    print(boxAndCollectors)
+    print("==========Admin legte hinein===================")
+
+def adminTakesOrder():
+    # button reinlegen Hier
+    #admin wenn er/sie etwas rausnehmen will
+    for sf,(name,assetID) in boxAndCollectors:
+        if name == "admin":
+            boxAndCollectors[sf-1] = (sf,('',''))
+            hwCheckIN.hardwareCheckin(int(assetID))
+    closeSF()
+    print("==========Admin nimmt Heraus===================")
+    print(boxAndCollectors)
+    print("==========Admin nahm Heraus===================")
+
+def userBringsItemBack(UserID):
+    #User Kontext
+    sf = isThereSpace()
+    if not (sf):
+        print ("Alle Schließfächer sind voll")
+        return False
+    print("Im Schließfach NR.: {} ist platz".format(sf))
+    assetID = qrCodeReader.getQRCodeData()
+    openSF()
+    boxAndCollectors[sf-1] = (sf,("admin",assetID)) #-1 weil ein array fängt bei 0 an, duh
+    changeHWStatusTo.hardwareStatusToRueckgabebereit(int(assetID))
+    closeSF()
+    print ("Die Bestellung des Users {} wurde in das Schließfach {} hinzugefügt".format(UserID,sf))
     return True
 
 
@@ -113,11 +116,20 @@ def closeSF(): print("Schließfach schließen")
 print(temp)
 print(boxAndCollectors)
 print("======================")
-addOrderNextFreeSfFor(userRFID)
+adminAddsOrder()
+print(temp)
+print(boxAndCollectors)
+print("======================")
+print("USER TAKES ITEM")
+userTakesItem(userRFID)
+print("======================")
+print("USER BRINGS ITEM BACK")
+userBringsItemBack(userRFID)
 print("======================")
 print(boxAndCollectors)
 print("======================")
-#userTakesItem(userRFID)
+print("ADMIN TAKES ORDER")
+adminTakesOrder()
 print("======================")
 print(boxAndCollectors)
 print(temp)
