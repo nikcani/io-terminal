@@ -28,7 +28,7 @@ def getHardwareByStatus():
     myListe =[]
     myrows = json_object["rows"]
     for row in myrows:
-        if (row['status_label']['id']) is 5:
+        if (row['status_label']['id']) == 5:
                 rueckgabeBereiteObejekte = (row['id'],row['asset_tag'])
                 print(rueckgabeBereiteObejekte)
                 myListe.append(rueckgabeBereiteObejekte)
