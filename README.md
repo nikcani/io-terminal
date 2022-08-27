@@ -9,25 +9,53 @@ Das IoTerminal ermöglicht es Studierenden der TH-Köln das Abholen von angefrag
 ## Architecture
 [back to wiki](https://github.com/nikcani/smart-inventory/wiki#architektur)
 ```mermaid
-graph TD;
-A[fa:fa-database Database];
-B[fa:fa-barcode Code Scanner];
-C[fa:fa-user User];
-D[fa:fa-desktop Device with Webbrowser];
-E[fa:fa-wifi NFC Scanner];
-F[fa:fa-dolly Product];
-H[fa:fa-microchip LED Controller];
-I[fa:fa-lightbulb LEDs];
-D---|HTTP|A;
-C-->|uses|B;
-C-->|interacts with|D;
-C-->|authorizes at|E;
-E-->|activates user session|B;
-B-->|scans|F;
-F-->|scanned|B;
-B---|HTTP/REST|A;
-H-->|controls|I;
-B-->|activates location light|H;
+graph TD
+
+USER(fa:fa-user User)
+
+BROWSER[fa:fa-desktop Device with Webbrowser]
+
+SNIPEIT[fa:fa-database SNIPE-IT]
+
+PI[[fa:fa-microchip PI]]
+CAMERA[fa:fa-barcode PI Camera]
+NFCSCANNER[fa:fa-wifi NFC Scanner]
+
+ESP[[fa:fa-microchip ESP]]
+LED[fa:fa-lightbulb LEDs]
+BUTTONS[fa:fa-toggle-on Buttons]
+DISPLAY[fa:fa-tv Display]
+LOCK[fa:fa-lock Lock]
+
+USER-->|interacts with|BROWSER
+USER-->|sees|DISPLAY
+USER-->|authorizes at|NFCSCANNER
+USER-->|presses|BUTTONS
+USER-->|uses|CAMERA
+
+DISPLAY-->|presents|USER
+LED-->|indicate|USER
+
+BROWSER-->|HTTP Request|SNIPEIT
+SNIPEIT-->|HTTP Response|BROWSER
+
+PI-->|HTTP Request|SNIPEIT
+SNIPEIT-->|HTTP Response|PI
+
+NFCSCANNER-->|send code|PI
+PI-->|request code|NFCSCANNER
+
+CAMERA-->|stream|PI
+PI-->|activate|CAMERA
+
+ESP-->|serial bus|PI
+PI-->|serial bus|ESP
+
+ESP-->|controls|LED
+ESP-->|controls|DISPLAY
+ESP-->|controls|LOCK
+
+BUTTONS-->|interrupt|ESP
 ```
 [edit graph](https://mermaid-js.github.io/mermaid-live-editor/)
 
