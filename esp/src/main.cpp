@@ -99,7 +99,12 @@ void interpretPacket(String packet) {
     } else if (action == "display_color") {
         lcd.setRGB(data_1.substring(0, 2).toInt(), data_1.substring(4, 6).toInt(), data_1.substring(8, 10).toInt());
     } else if (action == "li_activate") {
-        lightIndicator.showPixelColor(data_1.toInt(), data_2.substring(0, 2).toInt(), data_2.substring(4, 6).toInt(), data_2.substring(8, 10).toInt());
+        lightIndicator.showPixelColor(
+                data_1.toInt(),
+                data_2.substring(0, 2).toInt(),
+                data_2.substring(4, 6).toInt(),
+                data_2.substring(8, 10).toInt()
+        );
     } else if (action == "li_clear") {
         lightIndicator.clear();
     } else if (action == "lock_open") {
