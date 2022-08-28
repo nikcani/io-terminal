@@ -137,11 +137,21 @@ def close_lock():
     serialApi.li_clear()
 
 
+def left_pressed(user_id):
+    print('left')
+    print(user_id)
+
+
+def right_pressed(user_id):
+    print('right')
+    print(user_id)
+
+
 def main():
     serialApi.display_print("Bitte Karte vor ", "Sensor halten.  ")
     user_id = get_user_id_from_rfid()
     serialApi.display_print("Hallo {}".format(user_id), "[Rein]    [Raus]")
-    serialApi.listen_for_actions()
+    serialApi.listen_for_actions(left_pressed, right_pressed, user_id)
 
 
 while True:

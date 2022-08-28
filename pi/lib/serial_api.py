@@ -16,19 +16,15 @@ class SerialApi:
         if self.debug:
             print(string)
 
-    def listen_for_actions(self):
+    def listen_for_actions(self, left_pressed_callback, right_pressed_callback, callback_param):
         line = self.ser.readline().decode().strip()
         self.print_if_debug("received from serial interface: " + line)
         if line == "button_left_pressed":
-            self.button_left_pressed()
+            self.print_if_debug('button press detected: left')
+            left_pressed_callback(callback_param)
         elif line == "button_right_pressed":
-            self.button_right_pressed()
-
-    def button_left_pressed(self):
-        self.print_if_debug('button press detected: left')
-
-    def button_right_pressed(self):
-        self.print_if_debug('button press detected: right')
+            self.print_if_debug('button press detected: right')
+            right_pressed_callback(callback_param)
 
     def write_line(self, string):
         self.ser.write(str.encode(string))
