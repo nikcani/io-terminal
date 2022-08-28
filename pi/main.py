@@ -1,148 +1,152 @@
-# ein pair besteht aus einem/einer schliesßfach/-nummer ((links) in dem fall von 1-6) und der ID des Users (mitte) und das und das Assed_tag des Produktes,
-# ist die ID leer dann ist das schließfach auch leer
-# man kann durch ein hinzufügen eines dritten elements auch den inhalt des schließfaches einbetten erfordert aber kleine modifikationen im code
+# Ein pair besteht aus einem/einer Schließfach/-nummer ((links) in dem Fall von 1 bis 6) und der ID des Users (mitte)
+# und das asset_tag des Produktes, ist die ID leer dann ist das Schließfach auch leer man kann durch ein
+# Hinzufügen eines dritten elements auch den inhalt des schließfaches einbetten erfordert aber kleine modifikationen
+# im code
 
-import json
-from telnetlib import STATUS
-import rfid_test.Read as myRead
-import request.get_Hardware as myReq
-# import request.post_HardwareStatus as ChangeHwStatus
-import request.post_hardwareCheckout as hwCheckOUT
-import request.post_HardwareCheckin as hwCheckIN
-import request.patch_changeHardwareStatus as changeHWStatusTo
-import qrcode.qrCodeReader as qrCodeReader
-import request.get_searchUserByAssetID as getSUBAssedID
-import request.get_hardwareByStatus as getHWbyStatus
+from lib.qr_code_reader import get_qr_code_data
+from lib.rfid import read_rfid_tag
+from lib.serial_api import SerialApi
+from pi.lib.snipe_it_api import hardware_status_set_picked_up, hardware_status_set_ready_to_pickup, \
+    hardware_checkin, hardware_status_set_ready_to_return, get_hardware_by_asset_id
 
-def getUserIDFormRFID():
-    username = myRead.myRead().strip()  # RFID von der Karte
+serialApi = SerialApi()
+
+boxAndCollectors = [(1, ('Karakan', '000069')), (2, ('', '')), (3, ('', '')), (4, ('', '')), (5, ('', '')),
+                    (6, ('', ''))]
+print(boxAndCollectors)
+temp = boxAndCollectors  # testing || Originalzustand der liste
+
+
+def get_user_id_from_rfid():
+    username = read_rfid_tag().strip()
     print("======================================")
-    print("gelesen wurde ")
+    print("gelesen wurde")
     print(username)
     print("======================================")
     return username
 
-boxAndCollectors =  [(1,( 'Karakan','000069')), (2, ('','')), (3,('','')), (4,('','')), (5,('','')), (6,('',''))]
-print(boxAndCollectors)
-temp = boxAndCollectors # testing || Orginal zustand der liste
 
-
-
-# suche nach dem NÄCHSTEN FREIEN platz
-def isThereSpace():
-    for sf , (userRFID,assetID) in boxAndCollectors:
-        if(assetID == ""):
+# suche nach dem NÄCHSTEN, FREIEN Platz
+def is_there_space():
+    for sf, (userRFID, assetID) in boxAndCollectors:
+        if assetID == "":
             print("Nächstes freie Schließfach ist {}".format(sf))
             return sf
     print("Schließfächer alle voll")
     return False
 
+
 # suche nach dem SF für den einen user
-def whereUserItem(UserID):
-    for sf , (userRFID,assetID) in boxAndCollectors:
-        if(userRFID == UserID):
-            print("Die Order des Users {} ist im Schließfach NR.: {}".format(UserID, sf))
-            return sf , (userRFID,assetID)
+def where_user_item(user_id):
+    for sf, (userRFID, assetID) in boxAndCollectors:
+        if userRFID == user_id:
+            print("Die Order des Users {} ist im Schließfach NR.: {}".format(user_id, sf))
+            return sf, (userRFID, assetID)
     print("Order leider nicht vorhanden")
     return False
 
 
-def adminAddsOrder():
-    userRFID = getUserIDFormRFID()
-    if userRFID == "admin":
-        #admin wenn er/sie erwas reinlegen will
-        assetID = qrCodeReader.getQRCodeData()
-        username = getSUBAssedID.getHardwareByAssetID(str(assetID))
-        sf = isThereSpace()
-        if not (sf):
-            print ("Alle Schließfächer sind voll")
+def admin_adds_order():
+    user_rfid = get_user_id_from_rfid()
+    if user_rfid == "admin":
+        # admin, wenn er/sie etwas einlegen will
+        asset_id = get_qr_code_data()
+        username = get_hardware_by_asset_id(str(asset_id))
+        sf = is_there_space()
+        if not sf:
+            print("Alle Schließfächer sind voll")
             return False
-        openSF()
-        boxAndCollectors[sf-1] = (sf,(username,assetID)) #-1 weil ein array fängt bei 0 an, duh
-        changeHWStatusTo.hardwareStatusToAbholbereit(int(assetID))
-        closeSF()
+        open_lock()
+        boxAndCollectors[sf - 1] = (sf, (username, asset_id))  # -1, weil ein array fängt bei 0 an, duh
+        hardware_status_set_ready_to_pickup(int(asset_id))
+        close_lock()
         print("==========Admin legt hinein===================")
         print(boxAndCollectors)
         print("==========Admin legte hinein===================")
     else:
         print("DU BIST KEIN ADMIN!!!!")
 
-def adminTakesOrder():
-    userRFID = getUserIDFormRFID()
-    if userRFID == "admin":
-        # button reinlegen Hier
-        #admin wenn er/sie etwas rausnehmen will
-        for sf,(name,assetID) in boxAndCollectors:
+
+def admin_takes_order():
+    user_rfid = get_user_id_from_rfid()
+    if user_rfid == "admin":
+        # button zum Einlegen hier
+        # admin, wenn er/sie etwas entnehmen will
+        for sf, (name, assetID) in boxAndCollectors:
             if name == "admin":
-                boxAndCollectors[sf-1] = (sf,('',''))
-                hwCheckIN.hardwareCheckin(int(assetID))
-        closeSF()
+                boxAndCollectors[sf - 1] = (sf, ('', ''))
+                hardware_checkin(int(assetID))
+        close_lock()
         print("==========Admin nimmt Heraus===================")
         print(boxAndCollectors)
         print("==========Admin nahm Heraus===================")
     else:
         print("DU BIST KEIN ADMIN!!!!")
 
-def userBringsItemBack():
-    #User Kontext
-    UserID = getUserIDFormRFID()
-    sf = isThereSpace()
-    if not (sf):
-        print ("Alle Schließfächer sind voll")
+
+def user_brings_item_back():
+    # User Kontext
+    user_id = get_user_id_from_rfid()
+    sf = is_there_space()
+    if not sf:
+        print("Alle Schließfächer sind voll")
         return False
-    print("Im Schließfach NR.: {} ist platz".format(sf))
-    assetID = qrCodeReader.getQRCodeData()
-    openSF()
-    boxAndCollectors[sf-1] = (sf,("admin",assetID)) #-1 weil ein array fängt bei 0 an, duh
-    changeHWStatusTo.hardwareStatusToRueckgabebereit(int(assetID))
-    closeSF()
-    print ("Die Bestellung des Users {} wurde in das Schließfach {} hinzugefügt".format(UserID,sf))
+    print("Im Schließfach NR.: {} ist Platz".format(sf))
+    asset_id = get_qr_code_data()
+    open_lock()
+    boxAndCollectors[sf - 1] = (sf, ("admin", asset_id))  # -1, weil ein array fängt bei 0 an, duh
+    hardware_status_set_ready_to_return(int(asset_id))
+    close_lock()
+    print("Die Bestellung des Users {} wurde in das Schließfach {} hinzugefügt".format(user_id, sf))
     return True
 
 
-def userTakesItem():
-    UserID = getUserIDFormRFID()
-    sf, (userRFID, assetID ) = whereUserItem(UserID)
-    if not (sf):
+def user_takes_item():
+    user_id = get_user_id_from_rfid()
+    sf, (userRFID, assetID) = where_user_item(user_id)
+    if not sf:
         print("Item nicht im Schließfach.")
         return False
-    openSF()
-    boxAndCollectors[sf-1] = (sf,("",'')) # Mereke: Leere ID = Kein Item
+    open_lock()
+    boxAndCollectors[sf - 1] = (sf, ("", ''))  # Merke: Leere ID = Kein Item
 
-    #id = asset id
-    print("User {} hat item aus dem fach herausgenommen".format(UserID))
-    changeHWStatusTo.hardwareStatusToAbgeholt(int(assetID))
-    closeSF()
+    # id = asset id
+    print("User {} hat item aus dem fach herausgenommen".format(user_id))
+    hardware_status_set_picked_up(int(assetID))
+    close_lock()
     return True
 
 
-def getAssetIDFromQRScanner(): return "00002"
+def open_lock():
+    print("Schließfach öffnen")
+    serialApi.lock_open()
 
-def openSF(): print("Schließfach öffnen")
-def closeSF(): print("Schließfach schließen")
+
+def close_lock():
+    print("Schließfach schließen")
+    serialApi.lock_close()
 
 
 # Tests
 print(temp)
 print(boxAndCollectors)
 print("======================")
-adminAddsOrder()
+admin_adds_order()
 print(temp)
 print(boxAndCollectors)
 print("======================")
 print("USER TAKES ITEM")
-userTakesItem()
+user_takes_item()
 print("======================")
 print(boxAndCollectors)
 print("======================")
 print("USER BRINGS ITEM BACK")
-userBringsItemBack()
+user_brings_item_back()
 print("======================")
 print(boxAndCollectors)
 print("======================")
 print("ADMIN TAKES ORDER")
-adminTakesOrder()
+admin_takes_order()
 print("======================")
 print(boxAndCollectors)
 print(temp)
-

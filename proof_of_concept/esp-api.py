@@ -1,7 +1,7 @@
 import sys
 from time import sleep
 
-from pi.lib.serialApi import SerialApi
+from pi.lib.serial_api import SerialApi
 
 serialApi = SerialApi()
 serialApi.print_if_debug("python script started")

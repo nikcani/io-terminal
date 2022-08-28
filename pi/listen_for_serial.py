@@ -1,4 +1,4 @@
-from lib.serialApi import SerialApi
+from lib.serial_api import SerialApi
 
 serialApi = SerialApi()
 serialApi.print_if_debug("python script started")
