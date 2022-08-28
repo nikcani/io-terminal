@@ -57,7 +57,7 @@ ESP-->|controls|LOCK
 
 BUTTONS-->|interrupt|ESP
 ```
-[edit graph](https://mermaid-js.github.io/mermaid-live-editor/)
+[edit graph](https://mermaid.live)
 
 ## Documentation
 Please have a look at the [Wiki](https://github.com/nikcani/smart-inventory/wiki)
