@@ -69,21 +69,6 @@ void setupButtons() {
     attachInterrupt(digitalPinToInterrupt(PIN_NO_BUTTON_RIGHT), buttonEventRight, CHANGE);
 }
 
-void testing() {
-    lightIndicator.showPixelColor(0, 255, 0, 0);
-    lightIndicator.showPixelColor(1, 0, 255, 0);
-    lightIndicator.showPixelColor(2, 0, 0, 255);
-    lightIndicator.showPixelColor(3, 255, 255, 255);
-    lightIndicator.showPixelColor(4, 255, 255, 0);
-    lightIndicator.showPixelColor(5, 0, 255, 255);
-
-    lock.open();
-    blinkInternalForOneSecond();
-    lock.close();
-
-    lightIndicator.clear();
-}
-
 void interpretPacket(String packet) {
     String action = packet.substring(0, 16);
     String data_1 = packet.substring(16, 32);
@@ -121,8 +106,6 @@ void setup() {
     lock = Lock();
     setupInternalLed();
     setupButtons();
-
-    //testing();
 }
 
 void loop() {
