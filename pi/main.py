@@ -2,6 +2,7 @@
 # und das asset_tag des Produktes, ist die ID leer dann ist das Schließfach auch leer man kann durch ein
 # Hinzufügen eines dritten elements auch den inhalt des schließfaches einbetten erfordert aber kleine modifikationen
 # im code
+import time
 
 from lib.qr_code_reader import get_qr_code_data
 from lib.rfid import read_rfid_tag
@@ -120,11 +121,15 @@ def user_takes_item():
 def open_lock():
     print("Schließfach öffnen")
     serialApi.lock_open()
+    serialApi.li_activate(4, "000 255 000")
 
 
 def close_lock():
     print("Schließfach schließen")
+    serialApi.li_activate(4, "255 000 000")
     serialApi.lock_close()
+    time.sleep(1)
+    serialApi.li_clear()
 
 
 # Tests
