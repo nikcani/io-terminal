@@ -38,6 +38,7 @@ def hardware_checkin(asset_id):  # zurückgegeben
 
 def get_hardware_by_asset_id(asset_id):
     response = requests.get("{}/hardware".format(api_url), headers=headers)
+    print(response.text)
     json_object = json.loads(response.text)
 
     rows = json_object["rows"]
