@@ -6,7 +6,7 @@
 from lib.qr_code_reader import get_qr_code_data
 from lib.rfid import read_rfid_tag
 from lib.serial_api import SerialApi
-from pi.lib.snipe_it_api import hardware_status_set_picked_up, hardware_status_set_ready_to_pickup, \
+from lib.snipe_it_api import hardware_status_set_picked_up, hardware_status_set_ready_to_pickup, \
     hardware_checkin, hardware_status_set_ready_to_return, get_hardware_by_asset_id
 
 serialApi = SerialApi()
