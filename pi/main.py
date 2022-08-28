@@ -141,6 +141,7 @@ def main():
     serialApi.display_print("Bitte Karte vor ", "Sensor halten.  ")
     user_id = get_user_id_from_rfid()
     serialApi.display_print("Hallo {}".format(user_id), "[Rein]    [Raus]")
+    serialApi.listen_for_actions()
 
 
 while True:
