@@ -12,10 +12,15 @@ from lib.snipe_it_api import hardware_status_set_picked_up, hardware_status_set_
 
 serialApi = SerialApi()
 
-boxAndCollectors = [(1, ('Karakan', '000069')), (2, ('', '')), (3, ('', '')), (4, ('', '')), (5, ('', '')),
-                    (6, ('', ''))]
+boxAndCollectors = [
+    (1, ('Karakan', '000069')),
+    (2, ('', '')),
+    (3, ('', '')),
+    (4, ('', '')),
+    (5, ('', '')),
+    (6, ('', ''))
+]
 print(boxAndCollectors)
-temp = boxAndCollectors  # testing || Originalzustand der liste
 
 
 def get_user_id_from_rfid():
@@ -132,12 +137,12 @@ def close_lock():
     serialApi.li_clear()
 
 
+serialApi.display_print("Hallo! Karte vor", "den Sensor halten.")
+
 # Tests
-print(temp)
 print(boxAndCollectors)
 print("======================")
 admin_adds_order()
-print(temp)
 print(boxAndCollectors)
 print("======================")
 print("USER TAKES ITEM")
@@ -154,4 +159,3 @@ print("ADMIN TAKES ORDER")
 admin_takes_order()
 print("======================")
 print(boxAndCollectors)
-print(temp)
