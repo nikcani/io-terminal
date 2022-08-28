@@ -109,9 +109,10 @@ void setup() {
 }
 
 void loop() {
+    // handle button press
     if (button_left) buttonAction(PIN_NO_BUTTON_LEFT);
     if (button_right) buttonAction(PIN_NO_BUTTON_RIGHT);
 
-    // Check to see if at least one character is available
+    // interpret serial characters
     if (Serial.available()) serialApi.actionListenerCycle(&interpretPacket);
 }
