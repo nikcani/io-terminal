@@ -137,7 +137,14 @@ def close_lock():
     serialApi.li_clear()
 
 
-serialApi.display_print("Hallo! Karte vor", "den Sensor halten.")
+def main():
+    serialApi.display_print("Bitte Karte vor ", "Sensor halten.  ")
+    user_id = get_user_id_from_rfid()
+    serialApi.display_print("Hallo {}".format(user_id), "[Rein]    [Raus]")
+
+
+while True:
+    main()
 
 # Tests
 print(boxAndCollectors)
