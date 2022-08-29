@@ -28,7 +28,6 @@ DISPLAY[fa:fa-tv Display]
 LOCK[fa:fa-lock Lock]
 
 USER-->|interacts with|BROWSER
-USER-->|sees|DISPLAY
 USER-->|authorizes at|NFCSCANNER
 USER-->|presses|BUTTONS
 USER-->|uses|CAMERA
