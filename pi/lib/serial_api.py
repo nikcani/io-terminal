@@ -41,7 +41,7 @@ class SerialApi:
         self.write_package_line(third)
         self.write_line("#")
 
-    def display_print(self, first, second):
+    def display_print(self, first="", second=""):
         self.write_package('display_print', first, second)
 
     def display_clear(self):
@@ -49,6 +49,15 @@ class SerialApi:
 
     def display_color(self, color):
         self.write_package('display_color', color)
+
+    def display_color_reset(self):
+        self.display_color("000 000 000")
+
+    def display_color_red(self):
+        self.display_color("255 000 000")
+
+    def display_color_green(self):
+        self.display_color("000 255 000")
 
     def li_clear(self):
         self.write_package('li_clear')

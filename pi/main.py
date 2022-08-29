@@ -137,21 +137,38 @@ def close_lock():
     serialApi.li_clear()
 
 
-def left_pressed(user_id):
+def put_in(user_id):
     print('left')
     print(user_id)
 
 
-def right_pressed(user_id):
-    print('right')
-    print(user_id)
+def take_out(user_id):
+    pos, (user_id, asset_id) = where_user_item(user_id)
+    if not pos:
+        serialApi.display_color_red()
+        serialApi.display_print("Keine Entnahme", "möglich.")
+        time.sleep(5)
+        serialApi.display_clear()
+        serialApi.display_color_reset()
+
+    else:
+        boxAndCollectors[pos - 1] = (pos, ("", ''))  # Merke: Leere ID = Kein Item
+        open_lock()
+        serialApi.display_print("Bitte entnehmen!", "[OK]   [ABBRUCH]")
+        serialApi.listen_for_actions(took_out, close_lock, asset_id)
+        print("User {} hat item aus dem fach herausgenommen".format(user_id))
+
+
+def took_out(asset_id):
+    hardware_status_set_picked_up(int(asset_id))
+    close_lock()
 
 
 def main():
     serialApi.display_print("Bitte Karte vor ", "Sensor halten.  ")
     user_id = get_user_id_from_rfid()
     serialApi.display_print("Hallo {}".format(user_id), "[Rein]    [Raus]")
-    serialApi.listen_for_actions(left_pressed, right_pressed, user_id)
+    serialApi.listen_for_actions(put_in, take_out, user_id)
 
 
 while True:
