@@ -27,11 +27,12 @@ def get_qr_code_data():
     try:
         im = None
         while im is None:
-            del ret, frame
             # Read current frame
             ret, frame = camera.read()
             im = decode_cam(frame)
+            del ret, frame
             if im is not None:
+                print(im)
                 return im
     except KeyboardInterrupt:
         print('interrupted!')

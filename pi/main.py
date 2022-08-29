@@ -98,6 +98,7 @@ def took_out(tupel):
     close_lock()
     pos, user_id, asset_id = tupel
     boxAndCollectors[pos - 1] = (pos, ("", ""))
+    print(boxAndCollectors)
     if asset_id == "admin":
         hardware_checkin(asset_id)
     else:
@@ -108,6 +109,7 @@ def is_put_in(tupel):
     close_lock()
     sf, user_id, asset_id = tupel
     boxAndCollectors[sf - 1] = (sf, (user_id, asset_id))
+    print(boxAndCollectors)
     if user_id == "admin":
         hardware_status_set_ready_to_return(int(asset_id))
     else:
