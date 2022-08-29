@@ -100,7 +100,7 @@ def took_out(tupel):
     pos, user_id, asset_id = tupel
     boxAndCollectors[pos - 1] = (pos, ("", ""))
     print(boxAndCollectors)
-    if asset_id == "admin":
+    if user_id == "admin":
         hardware_checkin(asset_id)
     else:
         hardware_status_set_picked_up(int(asset_id))
