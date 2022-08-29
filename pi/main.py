@@ -124,13 +124,11 @@ def user_takes_item():
 
 
 def open_lock():
-    print("Schließfach öffnen")
     serialApi.lock_open()
     serialApi.li_activate(4, "000 255 000")
 
 
 def close_lock():
-    print("Schließfach schließen")
     serialApi.li_activate(4, "255 000 000")
     serialApi.lock_close()
     time.sleep(1)
@@ -138,29 +136,49 @@ def close_lock():
 
 
 def put_in(user_id):
-    print('left')
-    print(user_id)
+    if user_id == "admin":
+        sf = is_there_space()
+        if not sf:
+            serialApi.display_color_red()
+            serialApi.display_print("Alle Faecher", "sind voll.")
+            time.sleep(5)
+        else:
+            serialApi.display_color_green()
+            serialApi.display_print("Bitte Asset", "scannen.")
+            asset_id = get_qr_code_data()
+            username = get_hardware_by_asset_id(str(asset_id))
+            open_lock()
+            serialApi.display_print("Bitte einlegen!", "[DONE]    [CANCEL]")
+            serialApi.listen_for_actions(is_put_in, close_lock, (sf, username, asset_id))
+    else:
+        serialApi.display_color_red()
+        serialApi.display_print("Einlegen duerfen", "nur Admins.")
 
 
 def take_out(user_id):
     if not where_user_item(user_id):
         serialApi.display_color_red()
-        serialApi.display_print("Keine Entnahme", "möglich.")
+        serialApi.display_print("Keine Entnahme", "moeglich.")
         time.sleep(5)
         serialApi.display_clear()
         serialApi.display_color_reset()
-
     else:
         pos, (user_id, asset_id) = where_user_item(user_id)
         boxAndCollectors[pos - 1] = (pos, ("", ''))  # Merke: Leere ID = Kein Item
         open_lock()
-        serialApi.display_print("Bitte entnehmen!", "[OK]   [ABBRUCH]")
+        serialApi.display_print("Bitte entnehmen!", "[DONE]    [CANCEL]")
         serialApi.listen_for_actions(took_out, close_lock, asset_id)
-        print("User {} hat item aus dem fach herausgenommen".format(user_id))
 
 
 def took_out(asset_id):
     hardware_status_set_picked_up(int(asset_id))
+    close_lock()
+
+
+def is_put_in(tupel):
+    sf, username, asset_id = tupel
+    boxAndCollectors[sf - 1] = (sf, (username, asset_id))  # -1, weil ein array fängt bei 0 an, duh
+    hardware_status_set_ready_to_pickup(int(asset_id))
     close_lock()
 
 
