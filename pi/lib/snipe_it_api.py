@@ -36,7 +36,7 @@ def hardware_checkin(asset_id):  # zurückgegeben
     print(response.text)
 
 
-def get_hardware_by_asset_id(asset_id):
+def get_assigned_user(asset_id):
     response = requests.get("{}/hardware".format(api_url), headers=headers)
     print(response.text)
     json_object = json.loads(response.text)
