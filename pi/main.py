@@ -143,8 +143,7 @@ def put_in(user_id):
 
 
 def take_out(user_id):
-    pos, (user_id, asset_id) = where_user_item(user_id)
-    if not pos:
+    if not where_user_item(user_id):
         serialApi.display_color_red()
         serialApi.display_print("Keine Entnahme", "möglich.")
         time.sleep(5)
@@ -152,6 +151,7 @@ def take_out(user_id):
         serialApi.display_color_reset()
 
     else:
+        pos, (user_id, asset_id) = where_user_item(user_id)
         boxAndCollectors[pos - 1] = (pos, ("", ''))  # Merke: Leere ID = Kein Item
         open_lock()
         serialApi.display_print("Bitte entnehmen!", "[OK]   [ABBRUCH]")
