@@ -1,10 +1,8 @@
+import gc
 from datetime import datetime
 
 import cv2
 import pyzbar.pyzbar as pyzbar
-
-import gc
-
 
 
 # width = 2592
