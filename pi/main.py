@@ -122,5 +122,9 @@ def main():
     serialApi.listen_for_actions(put_in, take_out, user_id)
 
 
-while True:
-    main()
+try:
+    while True:
+        main()
+except KeyboardInterrupt:
+    serialApi.print_if_debug("interrupt")
+    del serialApi

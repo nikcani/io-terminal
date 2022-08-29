@@ -54,10 +54,10 @@ class SerialApi:
         self.display_color("255 255 255")
 
     def display_color_red(self):
-        self.display_color("255 50 50")
+        self.display_color("255 050 050")
 
     def display_color_green(self):
-        self.display_color("50 255 50")
+        self.display_color("050 255 050")
 
     def li_clear(self):
         self.write_package('li_clear')
