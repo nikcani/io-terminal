@@ -69,6 +69,7 @@ def put_in(user_id):
     else:
         serialApi.display_color_green()
         serialApi.display_print("Bitte Asset", "scannen.")
+        asset_id = None
         asset_id = get_qr_code_data()
         open_lock()
         if user_id == "admin":
