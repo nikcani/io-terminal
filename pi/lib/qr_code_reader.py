@@ -14,7 +14,7 @@ camera = cv2.VideoCapture(0)
 def decode_cam(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     barcodes = pyzbar.decode(gray)
-    #del gray
+    del gray
     print('reading...', end='\r')
     for barcode in barcodes:
         barcode_data = barcode.data.decode('utf-8')
