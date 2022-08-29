@@ -3,6 +3,8 @@ from datetime import datetime
 import cv2
 import pyzbar.pyzbar as pyzbar
 
+import gc
+
 camera = cv2.VideoCapture(0)
 
 
@@ -12,8 +14,6 @@ camera = cv2.VideoCapture(0)
 # camera.set(4,height)
 
 def decode_cam(image):
-    gray = None
-    barcodes = None
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     barcodes = pyzbar.decode(gray)
     print('reading...', end='\r')
@@ -35,8 +35,7 @@ def get_qr_code_data():
             del ret, frame
             if im is not None:
                 print(im)
-                x = im
-                del im
-                return x
+                gc.collect()
+                return im
     except KeyboardInterrupt:
         print('interrupted!')
