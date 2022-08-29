@@ -23,6 +23,7 @@ def decode_cam(image):
 
 
 def get_qr_code_data():
+    print("get_qr_code_data")
     try:
         im = None
         while im is None:
