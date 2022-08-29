@@ -148,7 +148,7 @@ def put_in(user_id):
             asset_id = get_qr_code_data()
             username = get_hardware_by_asset_id(str(asset_id))
             open_lock()
-            serialApi.display_print("Bitte einlegen!", "[DONE]    [CANCEL]")
+            serialApi.display_print("Bitte einlegen!", "[DONE]  [CANCEL]")
             serialApi.listen_for_actions(is_put_in, close_lock, (sf, username, asset_id))
     else:
         serialApi.display_color_red()
@@ -166,7 +166,7 @@ def take_out(user_id):
         pos, (user_id, asset_id) = where_user_item(user_id)
         boxAndCollectors[pos - 1] = (pos, ("", ''))  # Merke: Leere ID = Kein Item
         open_lock()
-        serialApi.display_print("Bitte entnehmen!", "[DONE]    [CANCEL]")
+        serialApi.display_print("Bitte entnehmen!", "[DONE]  [CANCEL]")
         serialApi.listen_for_actions(took_out, close_lock, asset_id)
 
 
