@@ -115,6 +115,7 @@ def is_put_in(tupel):
 
 
 def main():
+    close_lock()
     serialApi.display_clear()
     serialApi.display_color_reset()
     serialApi.display_print("Bitte Karte vor ", "Sensor halten.  ")
