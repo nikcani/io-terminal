@@ -52,7 +52,8 @@ def open_lock():
     serialApi.li_activate(4, "000 255 000")
 
 
-def close_lock():
+def close_lock(tupel=()):
+    print(tupel)
     serialApi.li_activate(4, "255 000 000")
     serialApi.lock_close()
     time.sleep(1)
